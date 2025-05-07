@@ -24,9 +24,7 @@ input("按回车键关闭浏览器...")
 driver.get("https://www.zhipin.com/web/geek/jobs?city=100010000&position=100101,100116&jobType=1902&experience=108&industry=100020&scale=304")
 input("按回车键关闭浏览器...")
 
-for i in range(10):
-    driver.execute_script("window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});")
-    time.sleep(1)
+
 
 
 

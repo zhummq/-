@@ -9,8 +9,8 @@ url = 'http://localhost/v1/workflows/run'
 api_key = 'app-zQiMzWrT8E0jbEZE89TrWJkB'
 
 headers = {
-    'Authorization': f'Bearer {api_key}',
-    'Content-Type': 'application/json'
+    'Authorization': 'Bearer app-zQiMzWrT8E0jbEZE89TrWJkB',
+    'Content-Type': 'application/json',
 }
 
 driver = webdriver.Chrome()
@@ -35,28 +35,29 @@ for card in cards:
     card.click()
     time.sleep(1)
     text  = driver.find_elements(By.CLASS_NAME,"desc")[1].text
-    # 构建inputs数据
-    inputs = {
-        "page": text
-    }
-
+    
+    print(text)
     # 构建完整请求数据
     data = {
-        "inputs": inputs,
+        "inputs": {"page":text },
         "response_mode": "blocking",
         "user": "eehf"
     }
+
     try:
         # 发送请求并处理响应
         response = requests.post(url, headers=headers, data=json.dumps(data))
+        print(response)
         response.raise_for_status()  # 检查请求是否成功
         response_data = response.json()
         response_text = response_data.get('data', {}).get('outputs', {}).get('output',{}).get('output','')
         if response_text == "Y":
-            chat = driver.find_element(By.XPATH,'//*[@id="wrap"]/div[2]/div[3]/div/div/div[2]/div[1]/div[1]/div[2]/a[2]')
-            chat.click()
-            time.sleep(1)
-            cancel =  driver.find_element(By.CLASS_NAME,"cancel-btn").click()
+            # chat = driver.find_element(By.XPATH,'//*[@id="wrap"]/div[2]/div[3]/div/div/div[2]/div[1]/div[1]/div[2]/a[2]')
+            # chat.click()
+            # time.sleep(1)
+            #cancel =  driver.find_element(By.CLASS_NAME,"cancel-btn").click()
+            #input("按回车键关闭浏览器...")
+            print("符合要求")
         elif response_text == "N":
             print("不符合要求")           
     except requests.exceptions.RequestException as e:
